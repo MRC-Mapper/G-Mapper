@@ -1,4 +1,8 @@
 """
+Modified graph.py in Mapper Interactive.
+"""
+
+"""
 Class to represent the nerve of a covering. Graph is used here to align with literature 
 that calls this the "mapper graph".graph
 """
