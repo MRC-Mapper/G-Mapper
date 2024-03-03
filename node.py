@@ -32,4 +32,4 @@ class Node:
         return f'Node: {self.interval_index}, {self.cluster_index}. Members: {self.members}'
 
     def short_string(self):
-        return f'node-{self.interval_index}-{self.cluster_index}'
+        return f'node-{self.interval_index}-{self.cluster_index}' 
