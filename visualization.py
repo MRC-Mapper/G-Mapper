@@ -1,3 +1,6 @@
+"""
+Modified visualization.py in Mapper Interactive.
+"""
 from graph import EnhancedGraph, Graph, AbstractGraph
 from node import Sign, Node, EnhancedNode
 try:
