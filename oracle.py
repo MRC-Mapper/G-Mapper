@@ -31,4 +31,4 @@ def map_overlap_cluster_to_interval(cluster_members: List[int], interval_cluster
     for i in range(len(interval_cluster_membership)):
         if len(set(interval_cluster_membership[i]).intersection(cluster_members_set)) > 0:
             intersect.append(i)
-    return intersect
+    return intersect 
