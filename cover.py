@@ -1,3 +1,6 @@
+"""
+Modified cover.py in Mapper Interactive.
+"""
 import numpy as np
 import math
 from abc import ABC, abstractmethod
