@@ -1,3 +1,6 @@
+"""
+Modified mapper.py in Mapper Interactive.
+"""
 import numpy as np
 from typing import List, Dict, Tuple
 from itertools import combinations
