@@ -73,12 +73,11 @@ def split(interval_membership,cover,g_overlap,index):
     j=index
     split_interval=gm_split(cover.intervals[j],np.array(interval_membership[j]),g_overlap)
     new_membership=membership(interval_membership[j],split_interval)
-    if (len(new_membership[0])>0) & (len(new_membership[1])>0) & (split_interval[0][0]!=split_interval[1][0]) & (split_interval[0][1]!=split_interval[1][1]):
-        cover.intervals=np.delete(cover.intervals,j,axis=0)
-        cover.intervals=np.insert(cover.intervals, j, split_interval, axis=0)
-        interval_membership.pop(j)
-        interval_membership.insert(j,new_membership[0]) 
-        interval_membership.insert(j+1,new_membership[1]) 
+    cover.intervals=np.delete(cover.intervals,j,axis=0)
+    cover.intervals=np.insert(cover.intervals, j, split_interval, axis=0)
+    interval_membership.pop(j)
+    interval_membership.insert(j,new_membership[0]) 
+    interval_membership.insert(j+1,new_membership[1]) 
     
 def gmeans_cover(X, lens, iterations=10, max_intervals=20, method=None, ad_threshold=10, g_overlap=0.1, initial_cover=Cover()): 
     cover=copy.deepcopy(initial_cover)
@@ -175,9 +174,15 @@ def gmeans_cover(X, lens, iterations=10, max_intervals=20, method=None, ad_thres
                 if ad_test(interval_membership[i])>ad_threshold:
                     check_interval[i] = True
                     check_interval.insert(i+1, True)
-                    split(interval_membership,cover,g_overlap,i)    
+                    tem=len(interval_membership[i])
+                    split(interval_membership,cover,g_overlap,i) 
+                    if tem==len(interval_membership[i]):
+                        check_interval[i] = False
+                        continue
+                    if tem==len(interval_membership[i+1]):
+                        check_interval[i+1] = False
+                        continue
                     ad_scores = [ad_test(interval_membership[i]), ad_test(interval_membership[i+1])]
-                    ad_scores = [0 if x != x else x for x in ad_scores]
                     if ad_scores[1]>ad_scores[0]:
                         temp=cover.intervals[i+1]
                         cover.intervals=np.delete(cover.intervals,i+1,axis=0)
