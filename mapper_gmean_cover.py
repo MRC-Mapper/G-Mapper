@@ -14,7 +14,7 @@ X: array-like of shape (n_samples, n_features)
 lens : array-like of shape (n_samples, 1)
 iterations: the number of iterations, default=10
 max_intervals: the maximum number of intervals, default=20
-method: {'BFS, 'randomized', 'DFS'}, default='BFS'
+method: {'DFS','BFS, 'randomized', }, default='DFS'
 ad_threshold: the threshold for Anderson-Darling test statistic, default=10
 g_overlap: the number representing how two intervals intersect, default=0.1
 initial_cover: the initial cover, default=the whole space
@@ -27,7 +27,10 @@ mapper
 def ad_test(data):
     # Anderson-Darling test.
     n=len(data)
-    and_corrected = anderson(data)[0]*(1+4/n-25/(n^2))
+    if n==0:
+        and_corrected=0
+    else:
+        and_corrected = anderson(data)[0]*(1+4/n-25/(n**2))
     return and_corrected
 
 def gm_split(interval,membership,g_overlap):
@@ -92,7 +95,41 @@ def gmeans_cover(X, lens, iterations=10, max_intervals=20, method=None, ad_thres
     # iterations.
     for iteration in range(iterations):
         modified = False
-        if method is None or method == 'BFS':
+        if method is None or method == 'DFS':
+            for i in range(len(cover.intervals)):
+                if not check_interval[i]:
+                    continue
+                if len(interval_membership[i])==0:
+                    check_interval[i] = False
+                    continue
+                if ad_test(interval_membership[i])>ad_threshold:
+                    check_interval[i] = True
+                    check_interval.insert(i+1, True)
+                    tem=len(interval_membership[i])
+                    split(interval_membership,cover,g_overlap,i) 
+                    if tem==len(interval_membership[i]):
+                        check_interval[i] = False
+                        continue
+                    if tem==len(interval_membership[i+1]):
+                        check_interval[i+1] = False
+                        continue
+                    ad_scores = [ad_test(interval_membership[i]), ad_test(interval_membership[i+1])]
+                    if ad_scores[1]>ad_scores[0]:
+                        temp=cover.intervals[i+1]
+                        cover.intervals=np.delete(cover.intervals,i+1,axis=0)
+                        cover.intervals=np.insert(cover.intervals, i, temp, axis=0)
+                        temp=interval_membership[i+1]
+                        interval_membership.pop(i+1)
+                        interval_membership.insert(i,temp) 
+                    modified = True
+                    break
+                else:
+                    check_interval[i] = False
+            if not modified:
+                print(f'\tLOG: Convergence after {iteration} iterations.')
+                return cover   
+                
+        elif method == 'BFS':
             if len(ad_scores)==0:
                 for i in range(len(cover.intervals)):
                     if not check_interval[i]:
@@ -125,7 +162,28 @@ def gmeans_cover(X, lens, iterations=10, max_intervals=20, method=None, ad_thres
             
                 del ad_scores[best_split]
                 del split_index[best_split]
+            
             else:
+                for i in range(len(cover.intervals)):
+                    if not check_interval[i]:
+                        continue
+                    if len(interval_membership[i])==0:
+                        check_interval[i] = False
+                        continue
+                    if ad_test(interval_membership[i])>ad_threshold:
+                        modified = True
+                    else:
+                        check_interval[i] = False
+                    
+                if not modified:
+                    print(f'\tLOG: Convergence after {iteration} iterations.')
+                    return cover  
+                
+                ad_scores = [0 if x != x else x for x in ad_scores]
+                if max(ad_scores)==0:
+                    print(f'\tLOG: Convergence after {iteration} iterations.')
+                    return cover  
+                    
                 best_split=ad_scores.index(max(ad_scores))
                 j=split_index[best_split]
                 check_interval[j] = True
@@ -134,6 +192,7 @@ def gmeans_cover(X, lens, iterations=10, max_intervals=20, method=None, ad_thres
                
                 del ad_scores[best_split]
                 del split_index[best_split]
+        
           
         elif method == 'randomized':
             all_elements_idx = [i for i in range(len(cover.intervals))]
@@ -164,41 +223,7 @@ def gmeans_cover(X, lens, iterations=10, max_intervals=20, method=None, ad_thres
                 print(f'\tLOG: Convergence after {iteration} iterations.')      
                 return cover
             
-        elif method == 'DFS':
-            for i in range(len(cover.intervals)):
-                if not check_interval[i]:
-                    continue
-                if len(interval_membership[i])==0:
-                    check_interval[i] = False
-                    continue
-                if ad_test(interval_membership[i])>ad_threshold:
-                    check_interval[i] = True
-                    check_interval.insert(i+1, True)
-                    tem=len(interval_membership[i])
-                    split(interval_membership,cover,g_overlap,i) 
-                    if tem==len(interval_membership[i]):
-                        check_interval[i] = False
-                        continue
-                    if tem==len(interval_membership[i+1]):
-                        check_interval[i+1] = False
-                        continue
-                    ad_scores = [ad_test(interval_membership[i]), ad_test(interval_membership[i+1])]
-                    if ad_scores[1]>ad_scores[0]:
-                        temp=cover.intervals[i+1]
-                        cover.intervals=np.delete(cover.intervals,i+1,axis=0)
-                        cover.intervals=np.insert(cover.intervals, i, temp, axis=0)
-                        temp=interval_membership[i+1]
-                        interval_membership.pop(i+1)
-                        interval_membership.insert(i,temp) 
-                    modified = True
-                    break
-                else:
-                    check_interval[i] = False
             
-            if not modified:
-                print(f'\tLOG: Convergence after {iteration} iterations.')
-                return cover    
-        
         if len(cover.intervals) > max_intervals:
                 break
     return cover 
