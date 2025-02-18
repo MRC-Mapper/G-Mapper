@@ -1,9 +1,9 @@
-# $G$-Mapper: Learning a Cover in the Mapper Construction
+# G-Mapper: Learning a Cover in the Mapper Construction
 
 This project implements an algorithm that we develop in our work on $G$-Mapper: Learning a Cover in the Mapper Construction.
 
 ## Abstract
-The Mapper algorithm is a visualization technique in topological data analysis (TDA) that outputs a graph reflecting the structure of a given dataset. However, the Mapper algorithm requires tuning several parameters in order to generate a "nice" Mapper graph. This paper focuses on selecting the cover parameter. We present an algorithm that optimizes the cover of a Mapper graph by splitting a cover repeatedly according to a statistical test for normality. Our algorithm is based on $G$-means clustering which searches for the optimal number of clusters in $k$-means by iteratively applying the Anderson-Darling test. Our splitting procedure employs a Gaussian mixture model to carefully choose the cover based on the distribution of the given data. Experiments for synthetic and real-world datasets demonstrate that our algorithm generates covers so that the Mapper graphs retain the essence of the datasets, while also running significantly fast.
+The Mapper algorithm is a visualization technique in topological data analysis (TDA) that outputs a graph reflecting the structure of a given dataset. However, the Mapper algorithm requires tuning several parameters in order to generate a ``nice" Mapper graph. This paper focuses on selecting the cover parameter. We present an algorithm that optimizes the cover of a Mapper graph by splitting a cover repeatedly according to a statistical test for normality. Our algorithm is based on G-means clustering which searches for the optimal number of clusters in $k$-means by iteratively applying the Anderson-Darling test. Our splitting procedure employs a Gaussian mixture model to carefully choose the cover according to the distribution of the given data. Experiments for synthetic and real-world datasets demonstrate that our algorithm generates covers so that the Mapper graphs retain the essence of the datasets, while also running significantly faster than a previous iterative method.  
 
 
 ## Mapper Construction
@@ -25,8 +25,8 @@ To implement the Mapper construction algorithm, we employ the code from [***Mapp
 
 Optimizing these parameters is essential for generating a "nice" Mapper graph. We concentrate on tuning a ***cover*** given by a collection of overlapping intervals. While the traditional Mapper algorithm takes a uniform cover with the number of intervals and the same overlapping percent between consecutive intervals to be specified by the user, sophisticated methods have recently been applied to optimize the cover of Mapper.
 
-## $G$-Mapper
-We propose a new Mapper construction algorithm called $G$***-Mapper*** for optimizing a cover of the Mapper graph based on $G$[***-means***](https://proceedings.neurips.cc/paper_files/paper/2003/file/234833147b97bb6aed53a8f4f1c7a7d8-Paper.pdf) clustering. The $G$-means clustering algorithm aims to learn the number $k$ of clusters in the $k$-means clustering algorithm according to a statistical test, called the ***Anderson–Darling*** test, for the hypothesis that the points in a cluster follow a ***Gaussian*** distribution. Our algorithm splits a cover element iteratively, with our splitting decision determined by the Anderson–Darling score. For further elaboration, we split each cover element into two overlapping intervals by employing a ***Gaussian mixture model*** (GMM) so that the splits are made according to the characteristics of the cover element rather than yielding uniform intervals. This procedure allows us to take variance into account when forming cover elements, making our algorithm perform well without the initialization of a cover.
+## G-Mapper
+We propose a new Mapper construction algorithm called $G$***-Mapper*** for optimizing a cover of the Mapper graph based on G[***-means***](https://proceedings.neurips.cc/paper_files/paper/2003/file/234833147b97bb6aed53a8f4f1c7a7d8-Paper.pdf) clustering. The G-means clustering algorithm aims to learn the number $k$ of clusters in the $k$-means clustering algorithm according to a statistical test, called the ***Anderson–Darling*** test, for the hypothesis that the points in a cluster follow a ***Gaussian*** distribution. Our algorithm splits a cover element iteratively, with our splitting decision determined by the Anderson–Darling score. For further elaboration, we split each cover element into two overlapping intervals by employing a ***Gaussian mixture model*** (GMM) so that the splits are made according to the characteristics of the cover element rather than yielding uniform intervals. This procedure allows us to take variance into account when forming cover elements, making our algorithm perform well without the initialization of a cover.
 
 <br/>
 <div align="center">
@@ -43,12 +43,12 @@ Our $G$-Mapper is inspired by an algorithm called [***Multipass AIC/BIC***](http
 
 
 ## Reference
-* E. Alvarado, R. Belton, E. Fischer, K. J. Lee, S. Palande, S. Percival, and E. Purvine. $G$-Mapper: Learning a Cover in the Mapper Construction. arXiv preprint arXiv:2309.06634 (2023).
+* E. Alvarado, R. Belton, E. Fischer, K. J. Lee, S. Palande, S. Percival, and E. Purvine. G-Mapper: Learning a Cover in the Mapper Construction. arXiv preprint arXiv:2309.06634 (2023).
 
 
 ```
 @article{alvarado2023g,
-  title={$G$-Mapper: Learning a Cover in the Mapper Construction},
+  title={G-Mapper: Learning a Cover in the Mapper Construction},
   author={Alvarado, Enrique and Belton, Robin and Fischer, Emily and Lee, Kang-Ju and Palande, Sourabh and Percival, Sarah and Purvine, Emilie},
   journal={arXiv preprint arXiv:2309.06634},
   year={2023}
