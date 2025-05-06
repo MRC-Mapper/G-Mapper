@@ -43,7 +43,7 @@ Our G-Mapper is inspired by an algorithm called [***Multipass AIC/BIC***](https:
 
 
 ## Reference
-* E. Alvarado, R. Belton, E. Fischer, K. J. Lee, S. Palande, S. Percival, and E. Purvine. G-Mapper: Learning a Cover in the Mapper Construction. arXiv preprint arXiv:2309.06634 (2023).
+
 
 
 ```
@@ -58,3 +58,4 @@ year = {2025},
 doi = {10.1137/24M1641312},
 URL = {https://epubs.siam.org/doi/abs/10.1137/24M1641312}}
 ```
+* (arXiv Version) E. Alvarado, R. Belton, E. Fischer, K. J. Lee, S. Palande, S. Percival, and E. Purvine. G-Mapper: Learning a Cover in the Mapper Construction. arXiv preprint arXiv:2309.06634 (2023).
