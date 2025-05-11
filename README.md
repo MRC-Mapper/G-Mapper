@@ -58,5 +58,5 @@ year = {2025},
 doi = {10.1137/24M1641312},
 URL = {https://epubs.siam.org/doi/abs/10.1137/24M1641312}}
 ```
-* (Journal Version(https://epubs.siam.org/doi/abs/10.1137/24M1641312)) E. Alvarado, R. Belton, E. Fischer, K. J. Lee, S. Palande, S. Percival, and E. Purvine. (2025). G-mapper: Learning a cover in the mapper construction. SIAM Journal on Mathematics of Data Science, 7(2), 572-596.
+* ([Journal Version](https://epubs.siam.org/doi/abs/10.1137/24M1641312)) E. Alvarado, R. Belton, E. Fischer, K. J. Lee, S. Palande, S. Percival, and E. Purvine. (2025). G-mapper: Learning a cover in the mapper construction. SIAM Journal on Mathematics of Data Science, 7(2), 572-596.
 * (ArXiv Version) E. Alvarado, R. Belton, E. Fischer, K. J. Lee, S. Palande, S. Percival, and E. Purvine.  (2023). G-Mapper: Learning a Cover in the Mapper Construction. arXiv preprint arXiv:2309.06634.
